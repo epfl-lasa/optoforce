@@ -1,5 +1,6 @@
 <launch>
-  <!-- Serial port for the optoforce sensor -->
+  <!-- Serial port for the optoforce sensor
+        ! Edit this to be the actual device path-->
   <arg name="port" default="/dev/ttyACM0"/>
   <!-- Update speed. Available values:
         "Stop"
@@ -26,14 +27,18 @@
         "s-ch/3-axis"
         "m-ch/3-axis"
         "s-ch/6-axis"
-        -->
-  <arg name="type" default="m-ch/3-axis"/>
+      WARNING: The type has to be consistent with the *.yaml set up file.
+      -->
+  <arg name="type" default="s-ch/3-axis"/>
+  
+  <!-- Direction of scaling file 
+        WARNING: The yaml set up file has to be consistent with the "type"-->
+  <arg name="scaling_file" default="$(find optoforce)/config/single_channel_3_axis_generic_scale.yaml"/>
+
   <!-- Numerical index of the first sensor. The rest (if this is a multi-channel DAC)
   will get the consecutive numbers -->
   <arg name="starting_index" default="0"/>
-  <!-- Direction of scaling file -->
-  <arg name="scaling_file" default="$(find optoforce)/config/multi_channel_3_axis_generic_scale.yaml"/>
-
+  
   <node name="$(anon optoforce)" pkg="optoforce" type="optoforce_node.py" output="screen">
     <param name="port" value="$(arg port)"/>
     <param name="speed" value="$(arg speed)"/>
